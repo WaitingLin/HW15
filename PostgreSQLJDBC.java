@@ -115,7 +115,7 @@ public class PostgreSQLJDBC extends Thread {
 	    }
 	}
 	
-	/*(Posgresql) Return Uid=003 Date=2008-10-23 Time=17:58:54 Lat=39.999844 Lon=116.326752 Query time*/
+	/*(Posgresql) Return Uid=003 Date=2008-11-19  Query time*/
 	public static long posgresqlQueryTime(){
 		long startTime = System.currentTimeMillis();
 		Connection c = null;
@@ -126,8 +126,7 @@ public class PostgreSQLJDBC extends Thread {
 	    	   c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/try_postgres","postgres", "f74001234");		
 	    	   c.setAutoCommit(false);
 	    	   stmt = c.createStatement();
-	    	   ResultSet rs = stmt.executeQuery( "SELECT * FROM trace3 WHERE Uid='003' AND Date='2008-10-23'"
-	    	   		+ "AND Time='17:58:54' AND Lat='39.999844' AND Lon='116.326752';" );
+	    	   ResultSet rs = stmt.executeQuery( "SELECT * FROM trace3 WHERE Uid='003' AND Date='2008-11-19';" );
 	    	   /*while ( rs.next() ) {
 	    		   String  Uid = rs.getString("Uid");
 	    		   String  Time = rs.getString("Date");
@@ -140,7 +139,7 @@ public class PostgreSQLJDBC extends Thread {
 	    		   System.out.println( "Lat = " + Lat );
 	    		   System.out.println( "Lon = " + Lon );
 	    		   System.out.println();
-	    	   }*/	    	   
+	    	   }    */	   
 		}catch ( Exception e ) {
 	         System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 	         System.exit(0);
@@ -149,7 +148,7 @@ public class PostgreSQLJDBC extends Thread {
 		return endTime-startTime;
 	}
 	
-	/*(Mongodb) Return Uid=003 Date=2008-10-23 Time=17:58:54 Lat=39.999844 Lon=116.326752 Query time*/
+	/*(Mongodb) Return Uid=003 Date=2008-11-19  Query time*/
 	public static long mongodbQueryTime(){
 		try {
 			long startTime = System.currentTimeMillis();
@@ -157,7 +156,7 @@ public class PostgreSQLJDBC extends Thread {
 	 	   	DB db = mongoClient.getDB( "try_mongodb" );
 			DBCollection coll = db.getCollection("trace3");
 			DBCursor cursor = coll.find();
-	 	   	BasicDBObject query = new BasicDBObject("Lat", 39.999844); 	   
+	 	   	BasicDBObject query = new BasicDBObject("Date", 2008-11-19); 	   
 	 	   	cursor = coll.find(query);	 	  
 	 	   	long endTime = System.currentTimeMillis();
 	 		cursor.close();
@@ -320,7 +319,7 @@ public class PostgreSQLJDBC extends Thread {
 	   Thread t5 = new Thread(p5);
 
 	   long startTime = System.currentTimeMillis();
-	   dropPosgresqlTable();
+	   //dropPosgresqlTable();
 	   createPosgresqlTable();
 	   /*--Run thread--*/
 	   t0.start();
@@ -382,6 +381,8 @@ public class PostgreSQLJDBC extends Thread {
 	   long posgresqlQueryTime=posgresqlQueryTime();
 	   System.out.println("Posgresql Query Time :"+posgresqlQueryTime/1000+"."+posgresqlQueryTime%1000+"s");
 	   long mongodbQueryTime = mongodbQueryTime();
+	   System.out.println(posgresqlQueryTime);
+	   System.out.println(mongodbQueryTime);
 	   System.out.println("Mongodb Query Time :"+mongodbQueryTime/1000+"."+mongodbQueryTime%1000+"s");
 	   System.out.println("End");
    }
